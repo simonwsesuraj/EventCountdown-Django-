@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+        <title>Event CountDown</title>
+        <link rel="icon" href="{% static 'images/myicon.ico' %}" type="image/x-icon">
+         <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+    <body>
+        <h1>Event CountDown Timer</h1>
+        <div id="timer">
+            <h3 id="event">{{ data.name }}</h3>
+            <h2>Time Remaing</h2>
+            <div id="countdown">
+                {{data.hours | stringformat:"02d"}} : {{data.minutes | stringformat:"02d"}} : {{data.seconds | stringformat:"02d"}}
+            </div>
+        </div>
+
+    <script>
+        function updatetimer(){
+            var time = document.getElementById('countdown').textContent.split(':');
+
+            var hours = parseInt(time[0]);
+            var minutes = parseInt(time[1]);
+            var seconds = parseInt(time[2]);
+
+            if(seconds > 0){
+                seconds--;
+            }
+            else{
+                if(minutes > 0){
+                    minutes--;
+                    seconds = 59;
+                }
+                else{
+                    if(hours > 0){
+                        hours--;
+                        minutes = 59;
+                        seconds = 59;
+                    }
+                }
+            }
+
+            document.getElementById('countdown').textContent =
+                (hours < 10 ? '0' : '') + hours + ' : ' +
+                (minutes < 10 ? '0' : '') + minutes + ' : ' +
+                (seconds < 10 ? '0' : '') + seconds;
+        }
+
+        setInterval(updatetimer, 1000);
+    </script>
+    </body>
+
+</html>
